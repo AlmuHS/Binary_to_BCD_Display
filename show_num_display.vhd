@@ -34,7 +34,7 @@ USE ieee.numeric_std.ALL;
 --use UNISIM.VComponents.all;
 
 entity show_num_display is
-    Port ( num : in STD_LOGIC_VECTOR (7 downto 0);
+    Port ( num : in STD_LOGIC_VECTOR (13 downto 0);
            clk : in STD_LOGIC;
            an: out std_logic_vector(3 downto 0);
            sseg : out STD_LOGIC_VECTOR (7 downto 0));
@@ -60,18 +60,17 @@ architecture Behavioral of show_num_display is
     end component;
     
     
-    function to_bcd ( bin : std_logic_vector(7 downto 0) ) return std_logic_vector is
+    function to_bcd ( bin : std_logic_vector(13 downto 0) ) return std_logic_vector is
         variable i : integer:=0;
-        variable bcd : std_logic_vector(11 downto 0) := (others => '0');
-        variable bint : std_logic_vector(7 downto 0) := bin;
+        variable bcd : std_logic_vector(15 downto 0) := (others => '0'); --4 bits/display
+        variable bint : std_logic_vector(13 downto 0) := bin; --The number of bits needed to fill 4 BCD display (max value 9999)
         
     begin
         for i in 0 to 7 loop  -- repeating 8 times.
-            bcd(11 downto 1) := bcd(10 downto 0);  --shifting the bits.
-            bcd(0) := bint(7);
-            bint(7 downto 1) := bint(6 downto 0);
+            bcd(15 downto 1) := bcd(14 downto 0);  --shifting the bits.
+            bcd(0) := bint(13);
+            bint(13 downto 1) := bint(12 downto 0);
             bint(0) :='0';
-            
             
             if(i < 7 and bcd(3 downto 0) > "0100") then --add 3 if BCD digit is greater than 4.
                 bcd(3 downto 0) := bcd(3 downto 0) + "0011";
@@ -84,12 +83,16 @@ architecture Behavioral of show_num_display is
             if(i < 7 and bcd(11 downto 8) > "0100") then  --add 3 if BCD digit is greater than 4.
                 bcd(11 downto 8) := bcd(11 downto 8) + "0011";
             end if;
+            
+            if(i < 7 and bcd(13 downto 11) > "0100") then  --add 3 if BCD digit is greater than 4.
+                bcd(11 downto 8) := bcd(13 downto 11) + "0011";
+            end if;
         end loop;
         return bcd;
     end to_bcd;
     
     signal in3, in2, in1, in0: std_logic_vector(6 downto 0);
-    signal bcd_num_full: std_logic_vector(11 downto 0);
+    signal bcd_num_full: std_logic_vector(15 downto 0);
     signal bcd_num1, bcd_num2, bcd_num3, bcd_num4: std_logic_vector(3 downto 0);
 begin
 
@@ -121,7 +124,7 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
-          bcd_num1 <= "0000"; 
+          bcd_num1 <= bcd_num_full(15 downto 12); 
           bcd_num2 <= bcd_num_full(11 downto 8);
           bcd_num3 <= bcd_num_full(7 downto 4);
           bcd_num4 <= bcd_num_full(3 downto 0);
