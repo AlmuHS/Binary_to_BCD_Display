@@ -66,7 +66,7 @@ architecture Behavioral of show_num_display is
         variable bint : std_logic_vector(13 downto 0) := bin; --The number of bits needed to fill 4 BCD display (max value 9999)
         
     begin
-        for i in 0 to 7 loop  -- repeating 8 times.
+        for i in 0 to 13 loop  -- repeating 13 times.
             bcd(15 downto 1) := bcd(14 downto 0);  --shifting the bits.
             bcd(0) := bint(13);
             bint(13 downto 1) := bint(12 downto 0);
@@ -84,8 +84,8 @@ architecture Behavioral of show_num_display is
                 bcd(11 downto 8) := bcd(11 downto 8) + "0011";
             end if;
             
-            if(i < 7 and bcd(13 downto 11) > "0100") then  --add 3 if BCD digit is greater than 4.
-                bcd(11 downto 8) := bcd(13 downto 11) + "0011";
+            if(i < 7 and bcd(15 downto 12) > "0100") then  --add 3 if BCD digit is greater than 4.
+                bcd(15 downto 12) := bcd(15 downto 12) + "0011";
             end if;
         end loop;
         return bcd;
