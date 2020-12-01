@@ -17,47 +17,47 @@ set_property CONFIG_VOLTAGE 3.3 [current_design];
 # buttons & switches
 #========================================================
 # 6 push buttons FIXED
-#set_property -dict { PACKAGE_PIN B7   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[0] }]; #up right
+#set_property -dict { PACKAGE_PIN B7   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[13] }]; #up right
 
-#set_property -dict { PACKAGE_PIN G4   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[1] }]; #down right
+#set_property -dict { PACKAGE_PIN G4   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[12] }]; #down right
 ##NET "bot<1>"    LOC="G4"   | IOSTANDARD=LVCMOS33 | PULLUP; #down right
 
-#set_property -dict { PACKAGE_PIN J4   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[2] }]; #1 left 
+#set_property -dict { PACKAGE_PIN J4   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[11] }]; #1 left 
 ##NET "bot<2>"    LOC="J4"  | IOSTANDARD=LVCMOS33 | PULLUP; #1 left
 
-#set_property -dict { PACKAGE_PIN A7   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[3] }]; #2 left
+#set_property -dict { PACKAGE_PIN A7   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[10] }]; #2 left
 ##NET "bot<3>"    LOC="A7"  | IOSTANDARD=LVCMOS33 | PULLUP; #2 left
 
-#set_property -dict { PACKAGE_PIN B5  IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[4] }]; #3 left
+#set_property -dict { PACKAGE_PIN B5  IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[9] }]; #3 left
 ##NET "bot<4>"    LOC="B5"  | IOSTANDARD=LVCMOS33 | PULLUP; #3 left
 
-#set_property -dict { PACKAGE_PIN K5   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[5] }]; #4 left
+#set_property -dict { PACKAGE_PIN K5   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[8] }]; #4 left
 ##NET "bot<5>"    LOC="K5"  | IOSTANDARD=LVCMOS33 | PULLUP; #4 left
 
 ## 8 slide switches FIXED
-#set_property -dict { PACKAGE_PIN B2   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[6] }];
+#set_property -dict { PACKAGE_PIN B2   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[0] }];
 ##NET "sw<0>"     LOC="B2"  | IOSTANDARD=LVCMOS33 | PULLUP;
 
-#set_property -dict { PACKAGE_PIN A2   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[7] }];
+#set_property -dict { PACKAGE_PIN A2   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[1] }];
 ##NET "sw<1>"     LOC="A2"  | IOSTANDARD=LVCMOS33 | PULLUP;
 
-#set_property -dict { PACKAGE_PIN C2   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[8] }];
+#set_property -dict { PACKAGE_PIN C2   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[2] }];
 ##NET "sw<2>"     LOC="C2"  | IOSTANDARD=LVCMOS33 | PULLUP;
 
-#set_property -dict { PACKAGE_PIN C4   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[9] }];
+#set_property -dict { PACKAGE_PIN C4   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[3] }];
 ##NET "sw<3>"     LOC="C4"   | IOSTANDARD=LVCMOS33 | PULLUP;
 
-#set_property -dict { PACKAGE_PIN A3   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[10] }];
+#set_property -dict { PACKAGE_PIN A3   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[4] }];
 ##NET "sw<4>"     LOC="A3"   | IOSTANDARD=LVCMOS33 | PULLUP;
 
-#set_property -dict { PACKAGE_PIN A4   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[11] }];
+#set_property -dict { PACKAGE_PIN A4   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[5] }];
 ##NET "sw<5>"     LOC="A4"   | IOSTANDARD=LVCMOS33 | PULLUP;
 
-#set_property -dict { PACKAGE_PIN D5   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[12] }];
+#set_property -dict { PACKAGE_PIN D5   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[6] }];
 ##NET "sw<6>"     LOC="D5"   | IOSTANDARD=LVCMOS33 | PULLUP;
 
-#set_property -dict { PACKAGE_PIN C6   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[13] }];
-#NET "sw<7>"     LOC="C6"   | IOSTANDARD=LVCMOS33 | PULLUP;
+#set_property -dict { PACKAGE_PIN C6   IOSTANDARD LVCMOS33 PULLUP TRUE} [get_ports { num[7] }];
+##NET "sw<7>"     LOC="C6"   | IOSTANDARD=LVCMOS33 | PULLUP;
 
 #========================================================
 # 4-digit time-multiplexed 7-segment LED display

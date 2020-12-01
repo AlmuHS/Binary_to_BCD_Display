@@ -34,7 +34,7 @@ USE ieee.numeric_std.ALL;
 --use UNISIM.VComponents.all;
 
 entity show_num_display is
-    Port ( num : in STD_LOGIC_VECTOR (13 downto 0);
+    Port ( num: in std_logic_vector(13 downto 0);
            clk : in STD_LOGIC;
            an: out std_logic_vector(3 downto 0);
            sseg : out STD_LOGIC_VECTOR (7 downto 0));
@@ -60,41 +60,50 @@ architecture Behavioral of show_num_display is
     end component;
     
     
-    function to_bcd ( bin : std_logic_vector(13 downto 0) ) return std_logic_vector is
-        variable i : integer:=0;
-        variable bcd : std_logic_vector(15 downto 0) := (others => '0'); --4 bits/display
-        variable bint : std_logic_vector(13 downto 0) := bin; --The number of bits needed to fill 4 BCD display (max value 9999)
+    function to_bcd ( bin : std_logic_vector(13 downto 0) ) return std_logic_vector is        
+        variable bcd:   std_logic_vector (15 downto 0);
+        variable bint:  std_logic_vector (13 downto 0); -- SEE process body
         
     begin
-        for i in 0 to 13 loop  -- repeating 13 times.
-            bcd(15 downto 1) := bcd(14 downto 0);  --shifting the bits.
+        bcd := (others => '0');      -- ADDED for EVERY CONVERSION
+        bint := bin(13 downto 0); -- ADDED for EVERY CONVERSION
+    
+        for i in 0 to 13 loop
+            bcd(15 downto 1) := bcd(14 downto 0);
             bcd(0) := bint(13);
             bint(13 downto 1) := bint(12 downto 0);
-            bint(0) :='0';
-            
-            if(i < 7 and bcd(3 downto 0) > "0100") then --add 3 if BCD digit is greater than 4.
-                bcd(3 downto 0) := bcd(3 downto 0) + "0011";
+            bint(0) := '0';
+
+            if i < 13 and bcd(3 downto 0) > "0100" then
+                bcd(3 downto 0) := 
+                    std_logic_vector (unsigned(bcd(3 downto 0)) + 3);
+            end if;
+            if i < 13 and bcd(7 downto 4) > "0100" then
+                bcd(7 downto 4) := 
+                    std_logic_vector(unsigned(bcd(7 downto 4)) + 3);
+            end if;
+            if i < 13 and bcd(11 downto 8) > "0100" then
+                bcd(11 downto 8) := 
+                    std_logic_vector(unsigned(bcd(11 downto 8)) + 3);
+            end if;
+            if i < 13 and bcd(15 downto 12) > "0100" then
+                bcd(11 downto 8) := 
+                    std_logic_vector(unsigned(bcd(15 downto 12)) + 3);
             end if;
             
-            if(i < 7 and bcd(7 downto 4) > "0100") then --add 3 if BCD digit is greater than 4.
-                bcd(7 downto 4) := bcd(7 downto 4) + "0011";
-            end if;
-            
-            if(i < 7 and bcd(11 downto 8) > "0100") then  --add 3 if BCD digit is greater than 4.
-                bcd(11 downto 8) := bcd(11 downto 8) + "0011";
-            end if;
-            
-            if(i < 7 and bcd(15 downto 12) > "0100") then  --add 3 if BCD digit is greater than 4.
-                bcd(15 downto 12) := bcd(15 downto 12) + "0011";
-            end if;
         end loop;
-        return bcd;
+        return std_logic_vector(bcd(15 downto 0));
     end to_bcd;
     
     signal in3, in2, in1, in0: std_logic_vector(6 downto 0);
     signal bcd_num_full: std_logic_vector(15 downto 0);
     signal bcd_num1, bcd_num2, bcd_num3, bcd_num4: std_logic_vector(3 downto 0);
+    signal num_full: std_logic_vector(13 downto 0) := num;
 begin
+
+    --The buttons of ZXDOS using low-level logic, so it's necessary to invert their inputs
+--    num_full(13 downto 8) <= not num(13 downto 8);
+--    num_full(7 downto 0) <= num(7 downto 0);
 
     decoder3: decoder_bcd_7s port map(binary_num => bcd_num4,
                                      bcd_7s_value => in3);
@@ -118,12 +127,10 @@ begin
                                an => an,
                                sseg => sseg);
    
-
-    bcd_num_full <= to_bcd(num);
-
     process(clk)
     begin
         if rising_edge(clk) then
+          bcd_num_full <= to_bcd(num_full);
           bcd_num1 <= bcd_num_full(15 downto 12); 
           bcd_num2 <= bcd_num_full(11 downto 8);
           bcd_num3 <= bcd_num_full(7 downto 4);

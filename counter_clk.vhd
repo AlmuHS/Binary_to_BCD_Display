@@ -63,13 +63,15 @@ begin
             clk_counter <= clk_counter + 1;
             
             if clk_counter = 25000000 then
-                counter <= counter+1;
+                counter <= counter + 1;
                 clk_counter <= 0;
             end if;
             
+            num <= std_logic_vector(counter);
         end if;
+      
     end process;
 
-    num <= std_logic_vector(counter);
+    
 
 end Behavioral;
